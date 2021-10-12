@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block style %}{% endblock %}
+    <!-- <link href="{% static 'exchange/index.css' %}" rel="stylesheet"> -->
+    <link href="{% static 'exchange/bootstrap.min.css' %}" rel="stylesheet">
+
+    {% block script %}
+    {% endblock %}
+    <script src="{% static 'exchange/trade.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    <title>CoinX | {% block title %}Top 100 Cryptocurrencies by Market Cap{% endblock %}</title>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" style="font-weight: 700px;" href="{% url 'index' %}">CoinX</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Markets</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'quote' %}">Quote</a>
+              </li>
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'buy' %}">Buy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sell' %}">Sell</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'orders' %}">Orders</a>
+                </li>
+              {% endif %}
+            </ul>
+            <ul class="navbar-nav ms-md-auto">
+              {% if user.is_authenticated %}
+                <li class="nav-item dropdown" style="margin-right: 100px;">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }}</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'portfolio' %}">Portfolio</a>
+                        <a class="dropdown-item" href="{% url 'deposit' %}">Deposit</a>
+                        <a class="dropdown-item" href="{% url 'withdraw' %}">Withdraw</a>
+                        <a class="dropdown-item" href="{% url 'history' %}">History</a>
+                    <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                          Cash: $<span id="cash">{{ user.cash }}</span>
+                        </a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                    </div>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+    </nav>
+
+    <div class="body" style="margin: 5px;">
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    <footer style="text-align: center;">
+      <p>Data provided for free by <a class="footer" href="https://www.coingecko.com/en">CoinGecko</a>. View <a class="footer" href="https://www.coingecko.com/en/api_terms">CoinGecko's Terms of Use</a>.</p>
+    </footer>
+</body>
+</html>

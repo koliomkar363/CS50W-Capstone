@@ -1,0 +1,55 @@
+{% extends "exchange/layout.html" %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'exchange/extra.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Your Portfolio{% endblock %}
+
+{% block body %}
+    <h3 class="text">Portfolio</h3>
+
+    <table class="table table-hover">
+        <thead>
+          <tr class="table-dark">
+            <th scope="col">Name</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Tokens</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for coin in portfolio %}
+                <tr class="table-light">
+                    <th scope="row">{{ coin.name }}</th>
+                    <td>{{ coin.symbol|upper }}</td>
+                    <td id="{{ coin.symbol }}-tokens">{{ coin.tokens }}</td>
+                    <td id="{{ coin.symbol }}">$Value</td>
+                </tr>
+            {% empty %}
+            {% endfor %}
+            <tr class="table-light">
+                <th scope="row">Cash</th>
+                <td></td>
+                <td></td>
+                <td>$<span id="p-cash">{{ user.cash }}</span></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="table-secondary">
+                <th scope="row">Total Estimate</th>
+                <td></td>
+                <td></td>
+                <td id="p-total">${{ user.cash }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <h3 id="portfolio">{{ coins }}</h3>
+    <p id="portfolio-name">{{ names }}</p>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'exchange/pf.js' %}"></script>
+{% endblock %}

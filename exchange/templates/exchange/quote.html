@@ -1,0 +1,24 @@
+{% extends "exchange/layout.html" %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'exchange/extra.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Quote{% endblock %}
+
+{% block body %}
+    <div id="msg">
+        <!-- Display quote here -->
+    </div>
+
+    <div class="div-center-pad">
+        <h3>Quote here</h3>
+            <div class="form-group input-center">
+                <input id="symbol" class="form-control" autofocus type="text" name="symbol" placeholder="Symbol">
+            </div>
+            <div style="margin-top: 10px;">
+                <input onclick="get_quote()" class="btn btn-primary" type="button" value="Quote">
+            </div>   
+    </div>
+{% endblock %}

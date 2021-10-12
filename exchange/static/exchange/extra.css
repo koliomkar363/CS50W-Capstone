@@ -1,0 +1,15 @@
+.text {
+  text-align: center;
+}
+
+.div-center-pad {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.input-center {
+  width: 250px;
+  display: block;
+  margin: 4px auto;
+}

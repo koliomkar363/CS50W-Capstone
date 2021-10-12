@@ -1,0 +1,70 @@
+{% extends "exchange/layout.html" %}
+{% load static %}
+
+{% block title %}Your Orders History{% endblock %}
+
+{% block body %}
+    <h3 style="text-align: center;">Order History</h3>
+
+    <table class="table table-hover">
+        <thead>
+          <tr class="table-dark">
+            <th scope="col">Type</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Tokens</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Transacted</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                {% if order.type == "BUY" %}
+                <tr class="table-success">
+                {% else %}
+                <tr class="table-danger">
+                {% endif %}
+                    <th scope="row">{{ order.type }}</th>
+                    <td>{{ order.symbol|upper }}</td>
+                    <td>{{ order.name }}</td>
+                    <td>${{ order.price }}</td>
+                    <td>{{ order.tokens }}</td>
+                    <td>${{ order.amount }}</td>
+                    <td>{{ order.timestamp }}</td>
+                </tr>
+            {% empty %}
+                No orders yet.
+                <th scope="row">N/A</th>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% endif %}
+
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
+            </li>
+        
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a></li>
+        {% endif %}
+
+        </ul>
+    </nav>
+    
+{% endblock %}

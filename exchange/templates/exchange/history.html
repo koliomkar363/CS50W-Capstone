@@ -1,0 +1,69 @@
+{% extends "exchange/layout.html" %}
+
+{% block title %}Funds History{% endblock %}
+
+{% block body %}
+    <h3 style="text-align: center;">Funds History</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-dark">
+            <th scope="col">Type</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Transacted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for txn in history %}
+                {% if txn.type == "DEP" %}
+                    <tr class="table-success">
+                        <th scope="row">{{ txn.type }}</th>
+                        <td>+${{ txn.transaction }}</td>
+                        <td>{{ txn.timestamp }}</td>
+                    </tr>
+                {% else %}
+                    <tr class="table-danger">
+                        <th scope="row">{{ txn.type }}</th>
+                        <td>-${{ txn.transaction }}</td>
+                        <td>{{ txn.timestamp }}</td>
+                    </tr>
+                {% endif %}
+            {% empty %}
+                <tr class="table-light">
+                    <th scope="row">N/A</th>
+                    <td>No orders yet</td>
+                    <td>N/A</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+        {% endif %}
+
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
+            </li>
+        
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            </li>
+        {% endif %}
+
+        </ul>
+    </nav>
+
+{% endblock %}

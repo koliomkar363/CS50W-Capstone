@@ -1,0 +1,44 @@
+{% extends "exchange/layout.html" %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'exchange/extra.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Buy{% endblock %}
+
+{% block body %}
+    <div id="buy-fail">
+        <div class="alert alert-dismissible alert-danger">
+            <div style="text-align: center;">
+                <strong id="fail-msg"></strong>
+            </div>
+        </div>
+    </div>
+    <div id="buy-success">
+        <div class="alert alert-dismissible alert-success">
+            <div style="text-align: center;">
+                <strong id="success-msg"></strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="div-center-pad">
+        <h3>Buy</h3>
+
+        <form action="{% url 'buy' %}" method="POST">
+            <div class="form-group input-center">
+                <input id="buy-symbol" class="form-control" autofocus type="text" name="symbol" placeholder="Symbol" required>
+            </div>
+            <div style="margin: 4px;">
+                <small class="text-muted">NOTE: Please make sure you have enough funds to complete this purchase.</small>
+            </div>
+            <div class="form-group input-center">
+                <input id="buy-tokens" class="form-control" type="number" min="0.001" name="tokens" placeholder="Tokens">
+            </div>
+            <div style="margin-top: 10px;">
+                <input onclick="buy()" class="btn btn-success" type="button" value="Buy">
+            </div>
+        </form>     
+    </div>
+{% endblock %}
